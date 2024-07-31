@@ -170,20 +170,74 @@ main {
 
   display: flex;
   flex-direction: column;
-
+  justify-content: space-between;
+  
   gap: 2rem;
 }
 
 
 
-.form_inputs {
-  height: 100%;
-
+.input_map {
   display: flex;
   flex-direction: column;
 
   gap: 2.5rem;
 }
+
+.input_container {
+  width: 100%;
+}
+
+.label_error {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+}
+
+.label_error > label {
+  color: hsl(213, 96%, 18%);
+}
+
+.label_error > p {
+  color: hsl(354, 84%, 57%);
+}
+
+.label_error > * {
+  margin: 0;
+}
+
+
+
+.input_field {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 0.5rem;
+
+  border: 1px solid hsl(229, 24%, 87%);
+  border-radius: 0.2rem;
+}
+
+
+.input_field_error {
+  width: 100%;
+  box-sizing: border-box;
+
+  padding: 0.5rem;
+
+  border: 1px solid hsl(354, 84%, 57%);
+  border-radius: 0.2rem;
+}
+
+
+
+
+
+
+
+
 
 .form_buttons {
   height: 3.5rem;
