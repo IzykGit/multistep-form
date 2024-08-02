@@ -11,6 +11,8 @@ const Plans = () => {
 
     const [planType, setPlanType] = useState(getUserPlan())
 
+    console.log(getUserPlan())
+
     const planHandler = (plan) => {
         if(planType.selectedPlan === plan) {
             setPlanType({ selectedPlan: {}, subType: planType.subType })
@@ -20,7 +22,7 @@ const Plans = () => {
     }
 
     const subscriptionHandler = () => {
-        setPlanType({ selectedPlan: {}, subType: !planType.subType })
+        setPlanType({ selectedPlan: { name: "Default", price: 999, src: "" }, subType: !planType.subType })
     }
 
     useEffect(() => {
@@ -36,7 +38,7 @@ const Plans = () => {
 
                 {plans.map(plan => (
 
-                    <div role="button" className={ planType.selectedPlan.name === plan.name ? planStyles.plan_button_selected : planStyles.plan_button } key={plan.price}
+                    <div role="button" className={planType.selectedPlan.name === plan.name ? planStyles.plan_button_selected : planStyles.plan_button } key={plan.price}
                     onClick={() => planHandler(plan)}>
 
                         <img src={plan.src} aria-label="Plan symbol" className={planStyles.plan_icon}/>

@@ -14,8 +14,12 @@ export const setUserInfo = (newInfo) => {
 
 const USER_PLANS_KEY = 'userPlans'
 
-const selectedPlan = {}
-let userPlan = JSON.parse(localStorage.getItem(USER_PLANS_KEY)) || { planType: selectedPlan, subType: false }
+const selectedPlan = {   
+    name: "Default",
+    price: 999,
+    src: ""
+}
+let userPlan = JSON.parse(localStorage.getItem(USER_PLANS_KEY)) || { selectedPlan, subType: false }
 
 export const getUserPlan = () => userPlan;
 

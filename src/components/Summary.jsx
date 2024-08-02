@@ -6,28 +6,38 @@ import summaryStyles from '../styles/Summary.module.css'
 
 const Summary = ({ handleReset }) => {
 
-    const [addOns, setAddOns] = useState(() => {
-        const userAddOns = getUserAddOns()
-        const addOns = Object.values(userAddOns)
-        return addOns
-    })
+    const userAddOns = getUserAddOns()
+    const addOns = Object.values(userAddOns)
 
-    const [planType, setPlanType] = useState(() => {
-        const userPlan = getUserPlan()
-        return userPlan
-    })
+    const userPlan = getUserPlan()
+    const planType = userPlan
 
     const [priceTotal, setPriceTotal] = useState(0)
+    
 
 
     useEffect(() => {
+
         const calculateTotal = () => {
+
             const subscriptionType = planType.subType
             const planPrice = planType.selectedPlan.price;
 
-            const addOnsPrice = addOns.reduce((prev, curr) => prev.price + curr.price)
+            let addOnsPrice;
+            let total = 0;
 
-            let total = planPrice + addOnsPrice;
+            if (addOns.length === 1) {
+                addOnsPrice = addOns[0].price;
+            }
+            else if (addOns.length > 1) {
+                addOnsPrice = addOns.reduce((total, addOn) => total + addOn.price, 0);
+            }
+            else {
+                addOnsPrice = 0;
+            }
+            
+
+            total = planPrice + addOnsPrice;
 
             if(!subscriptionType) {
                 total = total * 12

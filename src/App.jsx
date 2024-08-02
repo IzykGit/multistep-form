@@ -4,7 +4,7 @@ import { steps } from './data/steps.js'
 import { forms } from './data/forms.js'
 import { inputs } from './data/inputs.js'
 
-import { getUserInfo, getUserPlan, setUserInfo } from './data/subscription.js'
+import { getUserInfo, getUserPlan, setUserAddOns, setUserInfo, setUserPlan } from './data/subscription.js'
 
 
 import Plans from './components/Plans.jsx'
@@ -19,7 +19,7 @@ import "./App.css"
 
 const App = () => {
 
-    const [stepNumber, setStepNumber] = useState(4)
+    const [stepNumber, setStepNumber] = useState(1)
 
     const [personalInfo, setPersonalInfo] = useState(getUserInfo());
 
@@ -52,7 +52,6 @@ const App = () => {
     
             Object.keys(personalInfo).forEach(key => {
                 if(personalInfo[key] === "") {
-                    console.log("is empty")
                     newEmptyFields[key] = true;
     
                     setIsEmpty(newEmptyFields)
@@ -68,18 +67,25 @@ const App = () => {
             }
         }
 
+
         const userPlan = getUserPlan()
 
-
         if(stepNumber < 4) {
-            if(Object.keys(userPlan.selectedPlan).length === 0) {
+            if((userPlan.selectedPlan.name === "Default") && (stepNumber === 2)) {
                 return;
             }
 
             setStepNumber(stepNumber + 1);
             return;
         }
+        else {
 
+            // setting everything back to default values
+            setUserInfo({ name: "", email: "", number: "" })
+            setUserPlan({ selectedPlan: { name: "Default", price: 999, src: "" }, subType: false })
+            setUserAddOns({})
+            window.location.reload()
+        }
     }
 
     const resetSteps = () => {
