@@ -32,7 +32,7 @@ const Plans = () => {
 
 
     return (
-        <div className={planStyles.plan_step}>
+        <div className={planStyles.plan_step} data-aos="fade-right">
 
             <div className={planStyles.plans_container}>
 
@@ -41,7 +41,7 @@ const Plans = () => {
                     <div role="button" className={planType.selectedPlan.name === plan.name ? planStyles.plan_button_selected : planStyles.plan_button } key={plan.price}
                     onClick={() => planHandler(plan)}>
 
-                        <img src={plan.src} aria-label="Plan symbol" className={planStyles.plan_icon}/>
+                        <img src={plan.src} aria-label="Plan symbol" className={planStyles.plan_icon} alt={plan.name}/>
                         
                         <div className={planStyles.name_price}>
                             <p>{plan.name}</p>

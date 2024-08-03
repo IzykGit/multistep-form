@@ -33,7 +33,7 @@ const AddOns = () => {
     }, [selectedAddOn])
 
     return (
-        <div className={addOnStyles.addOn_main}>
+        <div className={addOnStyles.addOn_main} data-aos="fade-right">
 
             {addOns.map(addOn => (
                 <div key={addOn.type} className={Object.keys(selectedAddOn).includes(addOn.name) ? addOnStyles.selected_container : addOnStyles.container} role='button'

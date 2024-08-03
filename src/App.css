@@ -253,6 +253,11 @@ main {
   justify-content: space-between;
 }
 
+
+
+
+
+
 .next_button {
   width: 7.5rem;
 
@@ -306,6 +311,7 @@ main {
 
   visibility: hidden;
 }
+
 
 
 
@@ -382,6 +388,15 @@ main {
       height: 3rem;
     }
 
+    .form_buttons_hide {
+      height: 6rem;
+
+    }
+
+    .form_buttons_hide > button {
+      display: none;
+    }
+    
 
 
     .form {

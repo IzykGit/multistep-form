@@ -52,7 +52,7 @@ const Summary = ({ handleReset }) => {
     
 
     return (
-        <div className={summaryStyles.main}>
+        <div className={summaryStyles.main} data-aos="fade-right">
             <div className={summaryStyles.plans_and_addons}>
 
                 <div className={summaryStyles.plan_container}>

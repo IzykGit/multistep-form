@@ -4,20 +4,29 @@ import { steps } from './data/steps.js'
 import { forms } from './data/forms.js'
 import { inputs } from './data/inputs.js'
 
-import { getUserInfo, getUserPlan, setUserAddOns, setUserInfo, setUserPlan } from './data/subscription.js'
+import { getUserInfo, getUserPlan, setUserInfo } from './data/subscription.js'
 
 
 import Plans from './components/Plans.jsx'
 import AddOns from './components/AddOns.jsx'
 import Summary from './components/Summary.jsx'
+import Finished from './components/Finished.jsx'
+
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 import "./App.css"
 
 
 
-
-
 const App = () => {
+
+
+    useEffect(() => {
+        AOS.init({
+            duration: 400
+        })
+    }, [])
 
     const [stepNumber, setStepNumber] = useState(1)
 
@@ -32,8 +41,8 @@ const App = () => {
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setPersonalInfo(prevState => ({
-          ...prevState,
-          [name]: value
+            ...prevState,
+            [name]: value
         }));
 
         setIsEmpty(prevState => ({
@@ -70,21 +79,13 @@ const App = () => {
 
         const userPlan = getUserPlan()
 
-        if(stepNumber < 4) {
+        if(stepNumber < 5) {
             if((userPlan.selectedPlan.name === "Default") && (stepNumber === 2)) {
                 return;
             }
 
             setStepNumber(stepNumber + 1);
             return;
-        }
-        else {
-
-            // setting everything back to default values
-            setUserInfo({ name: "", email: "", number: "" })
-            setUserPlan({ selectedPlan: { name: "Default", price: 999, src: "" }, subType: false })
-            setUserAddOns({})
-            window.location.reload()
         }
     }
 
@@ -96,15 +97,15 @@ const App = () => {
 
     useEffect(() => {
         const handleResize = () => {
-          setScreenWidth(window.innerWidth);
+            setScreenWidth(window.innerWidth);
         };
     
         window.addEventListener('resize', handleResize);
     
         return () => {
-          window.removeEventListener('resize', handleResize);
+            window.removeEventListener('resize', handleResize);
         };
-      }, []);
+    }, []);
 
     return (
         <main>
@@ -116,7 +117,7 @@ const App = () => {
                     {steps.map(step => (
                         <li className='step_container' key={step.number}>
 
-                            <div className={step.number !== stepNumber ? "step_number_unselected" : "step_number"}>
+                            <div className={step.number !== stepNumber && !(stepNumber === 5 && step.number === 4) ? "step_number_unselected" : "step_number"}>
                                 <p>{step.number}</p>
                             </div>
 
@@ -133,7 +134,7 @@ const App = () => {
 
                 </ol>
 
-            
+                
                 <div className='form_content'>
                     
                     {forms.filter(form => form.step === stepNumber).map(filteredForm => (
@@ -147,7 +148,7 @@ const App = () => {
                         
 
                         {stepNumber === 1 && ( 
-                            <div className='input_map'>
+                            <div className='input_map' data-aos="fade-right">
                                 {inputs.map(input => (
 
                                     <div key={input.field} className='input_container'>
@@ -172,8 +173,11 @@ const App = () => {
                         {stepNumber === 4 && <Summary handleReset={resetSteps}/>}
 
 
-                        {screenWidth > 1000 && (
-                            <div className='form_buttons'>
+                        {stepNumber === 5 && <Finished />}
+
+
+                        {(screenWidth > 1000 && stepNumber !== 5) && (
+                            <div className="form_buttons">
                                 <button type='button' className={stepNumber > 1 ? 'back_button' : 'back_button_hidden'}
                                 onClick={() => setStepNumber(stepNumber - 1)}>Go Back</button>
                                 
@@ -194,7 +198,7 @@ const App = () => {
                 </div>
 
                 {screenWidth < 1000 && (
-                    <div className='form_buttons_mobile'>
+                    <div className={stepNumber !== 5 ? 'form_buttons_mobile' : "form_buttons_hide"}>
 
                         <button type='button' className={stepNumber > 1 ? 'back_button' : 'back_button_hidden'}
                         onClick={() => setStepNumber(stepNumber - 1)}>Go Back</button>
