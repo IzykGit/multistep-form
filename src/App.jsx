@@ -159,7 +159,7 @@ const App = () => {
                                         </div>
 
                                         <input type={input.type} name={input.name} className={isEmpty[input.name] ? "input_field_error" : "input_field" } 
-                                        id='input' onChange={handleInputChange} value={personalInfo[input.name]} aria-label={`Input you ${input.type} here!`}/>
+                                        id='input' onChange={handleInputChange} value={personalInfo[input.name]} aria-label={`Input you ${input.field} here!`}/>
                                     </div>
 
                                 ))}
