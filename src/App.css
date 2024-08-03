@@ -117,6 +117,10 @@ main {
   line-height: 1.2rem;
 }
 
+.step > :nth-child(1) {
+  font-size: 0.8rem;
+}
+
 
 .step > :nth-child(2) {
   font-weight: 700;
@@ -159,6 +163,8 @@ main {
 .form_title {
   font-size: 2rem;
   margin: 0rem 0rem 0.3rem 0rem;
+
+  color: hsl(213, 96%, 18%);
 }
 
 .form_desc {
