@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { steps } from './data/steps.js'
 import { forms } from './data/forms.js'
@@ -92,6 +92,19 @@ const App = () => {
         setStepNumber(2)
     }
 
+    const [screenWidth, setScreenWidth] = useState(window.innerWidth);
+
+    useEffect(() => {
+        const handleResize = () => {
+          setScreenWidth(window.innerWidth);
+        };
+    
+        window.addEventListener('resize', handleResize);
+    
+        return () => {
+          window.removeEventListener('resize', handleResize);
+        };
+      }, []);
 
     return (
         <main>
@@ -106,11 +119,14 @@ const App = () => {
                             <div className={step.number !== stepNumber ? "step_number_unselected" : "step_number"}>
                                 <p>{step.number}</p>
                             </div>
-                    
-                            <div className='step'>
-                                <p>{step.step}</p>
-                                <p>{step.name}</p>
-                            </div>
+
+                            {screenWidth > 1000 && (
+                                <div className='step'>
+                                    <p>{step.step}</p>
+                                    <p>{step.name}</p>
+                                </div>
+                            )}
+
                     
                         </li>
                     ))}
@@ -155,25 +171,41 @@ const App = () => {
 
                         {stepNumber === 4 && <Summary handleReset={resetSteps}/>}
 
-                        <div className='form_buttons'>
 
-                            <button type='button' className={stepNumber > 1 ? 'back_button' : 'back_button_hidden'}
-                            onClick={() => setStepNumber(stepNumber - 1)}>Go Back</button>
-                            
-                            {stepNumber !== 4 ? (
-                                <button type="submit" className='next_button'>Next Step</button>
-                            ) : (
-                                <button type="submit" className='next_button'>Confirm</button>
-                            )}
-                        </div>
+                        {screenWidth > 1000 && (
+                            <div className='form_buttons'>
+                                <button type='button' className={stepNumber > 1 ? 'back_button' : 'back_button_hidden'}
+                                onClick={() => setStepNumber(stepNumber - 1)}>Go Back</button>
+                                
+                                {stepNumber !== 4 ? (
+                                    <button type="submit" className='next_button'>Next Step</button>
+                                ) : (
+                                    <button type="submit" className='next_button'>Confirm</button>
+                                )}
+                            </div>
+                        )}
+
 
                     </form>
 
 
-
+                        
 
                 </div>
 
+                {screenWidth < 1000 && (
+                    <div className='form_buttons_mobile'>
+
+                        <button type='button' className={stepNumber > 1 ? 'back_button' : 'back_button_hidden'}
+                        onClick={() => setStepNumber(stepNumber - 1)}>Go Back</button>
+                        
+                        {stepNumber !== 4 ? (
+                            <button type="button" onClick={handleSubmit} className='next_button'>Next Step</button>
+                        ) : (
+                            <button type="button" onClick={handleSubmit} className='next_button'>Confirm</button>
+                        )}
+                    </div>
+                )}
 
             </section>
 

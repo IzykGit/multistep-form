@@ -149,3 +149,33 @@
     border-radius: 100%;
     background-color: white;
 }
+
+
+
+
+
+@media screen and (max-width: 500px) {
+    .plans_container {
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .plan_button {
+        width: 80%;
+        height: 3rem;
+
+        flex-direction: row;
+        align-items: center;
+
+        gap: 0;
+    }
+
+    .plan_button_selected {
+        width: 80%;
+        height: 4rem;
+
+        flex-direction: row;
+        align-items: center;
+    }
+}
