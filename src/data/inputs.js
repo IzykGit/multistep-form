@@ -1,3 +1,5 @@
+// different input types
+
 export const inputs = [
     {
         field: "Name",

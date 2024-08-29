@@ -30,55 +30,85 @@ const App = () => {
 
     const [stepNumber, setStepNumber] = useState(1)
 
+    // grabbing info from local storage
     const [personalInfo, setPersonalInfo] = useState(getUserInfo());
 
+    // setting info error fieds
     const [isEmpty, setIsEmpty] = useState({
         name: false,
         email: false,
         number: false
     })
 
+
+    // handling input change
     const handleInputChange = (e) => {
+
+        // destructuring personal info object
         const { name, value } = e.target;
+
+        // setting personal info
         setPersonalInfo(prevState => ({
+
+            // copying previous state values
             ...prevState,
+            // adding new value to matching field
             [name]: value
         }));
 
+        // setting empty state values
         setIsEmpty(prevState => ({
+
+            // copying previous state values
             ...prevState,
+            // adding new value to matching field
             [name]: false
         }))
     };
 
 
+    // handling submit
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        
         if(stepNumber === 1) {
+            // set empty fields to false
             let emptyField = false
+
+            // create copy of empty fields
             const newEmptyFields = { ...isEmpty };
-    
+            
+            // for each personal info key, check if it is empty
             Object.keys(personalInfo).forEach(key => {
                 if(personalInfo[key] === "") {
+
+                    // if an empty field exists, set that value to true
                     newEmptyFields[key] = true;
-    
+                    
+                    // set empty fields state to new fields
                     setIsEmpty(newEmptyFields)
+
+                    // set empty fields to true if an empty field exists
                     emptyField = true
                 }
             })
 
+            // if empty field true, return
             if(emptyField) {
                 return;
             }
             else {
+                // if no empty field then set user info local storage to personal info object
                 setUserInfo(personalInfo)
             }
         }
 
-
+        // getting user plan
         const userPlan = getUserPlan()
 
+
+        // if step number is less than 5, increment by 1
         if(stepNumber < 5) {
             if((userPlan.selectedPlan.name === "Default") && (stepNumber === 2)) {
                 return;
@@ -89,12 +119,19 @@ const App = () => {
         }
     }
 
+
+    // resetting steps to the second step
     const resetSteps = () => {
         setStepNumber(2)
     }
 
+
+
+    // setting window width
     const [screenWidth, setScreenWidth] = useState(window.innerWidth);
 
+
+    // updating window with in real time
     useEffect(() => {
         const handleResize = () => {
             setScreenWidth(window.innerWidth);

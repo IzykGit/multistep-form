@@ -9,10 +9,13 @@ import planStyles from '../styles/Plans.module.css'
 
 const Plans = () => {
 
+    // setting plan type to user plan hook
     const [planType, setPlanType] = useState(getUserPlan())
 
     console.log(getUserPlan())
 
+
+    // setting plan to selection
     const planHandler = (plan) => {
         if(planType.selectedPlan === plan) {
             setPlanType({ selectedPlan: {}, subType: planType.subType })
@@ -21,10 +24,12 @@ const Plans = () => {
         }
     }
 
+    // changing subscription type
     const subscriptionHandler = () => {
         setPlanType({ selectedPlan: { name: "Default", price: 999, src: "" }, subType: !planType.subType })
     }
 
+    // when plan type changes, update local host plan
     useEffect(() => {
         console.log(planType)
         setUserPlan(planType)

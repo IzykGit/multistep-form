@@ -6,9 +6,12 @@ import summaryStyles from '../styles/Summary.module.css'
 
 const Summary = ({ handleReset }) => {
 
+
+    // grabbing user add ons
     const userAddOns = getUserAddOns()
     const addOns = Object.values(userAddOns)
 
+    // grabbing user plan
     const userPlan = getUserPlan()
     const planType = userPlan
 
@@ -19,30 +22,37 @@ const Summary = ({ handleReset }) => {
     useEffect(() => {
 
         const calculateTotal = () => {
-
+            
+            // grabbing plan price
             const subscriptionType = planType.subType
             const planPrice = planType.selectedPlan.price;
 
             let addOnsPrice;
             let total = 0;
 
+
+            // if only one addon, grab its price
             if (addOns.length === 1) {
                 addOnsPrice = addOns[0].price;
             }
+            // if several add ons then add all their prices together
             else if (addOns.length > 1) {
                 addOnsPrice = addOns.reduce((total, addOn) => total + addOn.price, 0);
             }
+            // if no add ons then set tis price to zero
             else {
                 addOnsPrice = 0;
             }
             
-
+            // adding plan price and add on price
             total = planPrice + addOnsPrice;
-
+            
+            // multiply by 12 for plan type 
             if(!subscriptionType) {
                 total = total * 12
             }
 
+            // setting the total price for form
             setPriceTotal(total)
         }
 

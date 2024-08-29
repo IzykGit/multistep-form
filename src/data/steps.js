@@ -1,3 +1,5 @@
+// different steps
+
 export const steps = [
     {
         number: 1,

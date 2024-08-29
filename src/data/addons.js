@@ -1,3 +1,5 @@
+// different add ons to select from
+
 export const addOns = [
     {
         name: "Online server",

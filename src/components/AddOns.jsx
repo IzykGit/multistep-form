@@ -11,23 +11,35 @@ import addOnStyles from '../styles/AddOns.module.css'
 
 const AddOns = () => {
 
+
+    // setting add ons to get add ons hook
     const [selectedAddOn, setSelectedAddOn] = useState(getUserAddOns());
 
 
+    // handling add on selection
     const handleSelection = (addOn) => {
         
+        // setting state
         setSelectedAddOn(prevState => {
+            // creating state copy
             const updatedState = { ...prevState };
 
+            // if add on already exists, delete it from the array
             if (updatedState[addOn.name]) {
                 delete updatedState[addOn.name];
-            } else {
+            }
+            // if it doesn't exist then add the add on to the array
+            else {
                 updatedState[addOn.name] = addOn;
             }
+
+            // returning the updated state
             return updatedState;
         });
     }
 
+
+    // when add ons selection changes, update local storage
     useEffect(() => {
         setUserAddOns(selectedAddOn)
     }, [selectedAddOn])
